@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 class ProfileAdmin(admin.ModelAdmin):
     model           = Profile
-    list_display    = ('id')
+    list_display    = ('id',)
     search_fields   = ('id','name', )
 
 
