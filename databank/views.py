@@ -14,6 +14,14 @@ class TokenObtainPairView(TokenObtainPairView):
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
+class UserView(generics.RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes     = [IsAuthenticated]
+    serializer_class       = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
 class ProfileView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes     = [IsAuthenticated]
