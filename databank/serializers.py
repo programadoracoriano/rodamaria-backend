@@ -39,6 +39,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
-    def get_profile(self, obj):
+    def profile(self, obj):
         profile = Profile.objects.get(user=obj)
         return ProfileSerializer(profile).data
