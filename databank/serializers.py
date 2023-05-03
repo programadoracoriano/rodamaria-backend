@@ -34,11 +34,11 @@ class UserSerializer(serializers.ModelSerializer):
         refresh = RefreshToken.for_user(obj)
         return str(refresh.access_token)
 
+    def get_profile(self, obj):
+        profile = Profile.objects.get(user=obj)
+        return ProfileSerializer(profile).data
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-
-    def profile(self, obj):
-        profile = Profile.objects.get(user=obj)
-        return ProfileSerializer(profile).data
