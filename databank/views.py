@@ -35,7 +35,7 @@ class AddFundsView(generics.UpdateAPIView):
     permission_classes     = [IsAuthenticated]
     serializer_class       = ProfileSerializer
 
-    def get_object(self):
+    def get_queryset(self):
         return Profile.objects.filter(user=self.request.user)
 
     def put(self, request, *args, **kwargs):
