@@ -14,11 +14,12 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    token = serializers.SerializerMethodField()
-
+    token    = serializers.SerializerMethodField()
+    profile  = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'token', 'id')
+        fields = ('username', 'email', 'password', 'token',
+                  'profile', 'id')
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -32,3 +33,13 @@ class UserSerializer(serializers.ModelSerializer):
     def get_token(self, obj):
         refresh = RefreshToken.for_user(obj)
         return str(refresh.access_token)
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+    def get_profile(self, obj):
+        profile = Profile.objects.get(user=obj)
+        return ProfileSerializer(profile).data
