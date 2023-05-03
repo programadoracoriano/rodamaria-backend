@@ -38,7 +38,7 @@ class AddFundsView(generics.UpdateAPIView):
     def get_object(self):
         return Profile.objects.filter(user=self.request.user)
 
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         cc_number       = '4242 4242 4242 4242'
         cc_date_month   = '12'
         cc_date_year    = '2024'
