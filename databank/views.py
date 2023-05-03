@@ -39,10 +39,10 @@ class AddFundsView(generics.UpdateAPIView):
         return Profile.objects.filter(user=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        cc_number       = 4242424242424242
-        cc_date_month   = 12
-        cc_date_year    = 2024
-        cc_cvc          = 123
+        cc_number       = '4242424242424242'
+        cc_date_month   = '12'
+        cc_date_year    = '2024'
+        cc_cvc          = '123'
         card_number     = request.data.get('card_number')
         card_date_month = request.data.get('card_date_month')
         card_date_year  = request.data.get('card_date_year')
