@@ -53,7 +53,7 @@ class AddFundsView(generics.UpdateAPIView):
                      funds > 0 and funds is not None)
         if condition:
             # Get the object to update
-            instance = self.get_queryset()
+            instance = self.get_queryset().get()
             # Update the fields as needed
             instance.funds += funds
             instance.save()
