@@ -39,10 +39,14 @@ class UpdateProfileView(generics.UpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         instance = self.get_queryset().get()
-        instance.address  = request.data.get('address')
-        instance.zip_code = request.data.get('zip_code')
-        instance.location = request.data.get('location')
-        instance.phone    = request.data.get('phone')
+        if request.data.get('address')is not None:
+            instance.address  = request.data.get('address')
+        if request.data.get('zip_code')is not None:
+            instance.zip_code = request.data.get('zip_code')
+        if request.data.get('location')is not None:
+            instance.location = request.data.get('location')
+        if request.data.get('phone')is not None:
+            instance.phone    = request.data.get('phone')
         instance.save()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
