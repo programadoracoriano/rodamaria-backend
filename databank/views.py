@@ -29,6 +29,23 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user.profile
+class UpdateProfileView(generics.UpdateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes     = [IsAuthenticated]
+    serializer_class       = ProfileSerializer
+
+    def get_queryset(self):
+        return Profile.objects.filter(user=self.request.user)
+
+    def put(self, request, *args, **kwargs):
+        instance = self.get_queryset().get()
+        instance.address  = request.data.get('address')
+        instance.zip_code = request.data.get('zip_code')
+        instance.location = request.data.get('location')
+        instance.phone    = request.data.get('phone')
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
 class AddFundsView(generics.UpdateAPIView):
     authentication_classes = [JWTAuthentication]
