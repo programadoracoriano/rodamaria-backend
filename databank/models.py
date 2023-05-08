@@ -41,3 +41,57 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Bike(models.Model):
+    name       = models.CharField(max_length=120, null=True, blank=True,
+                                  verbose_name="Nome")
+    serie_number = models.CharField(max_length=120, null=True, blank=True,
+                                    verbose_name="Número de série")
+    status    = models.CharField(max_length=120, null=True, blank=True,
+                                 verbose_name="Estado")
+    bought    = models.DateField(null=True, blank=True,
+                                verbose_name="Data de compra")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = 'Bicicleta'
+        verbose_name_plural = 'Bicicletas'
+
+class Plan(models.Model):
+    name        = models.CharField(max_length=120, null=True, blank=True,
+                                   verbose_name="Nome")
+    description = models.CharField(max_length=120, null=True, blank=True,
+                                   verbose_name="Descrição")
+    price       = models.FloatField(null=True, blank=True,
+                                    verbose_name="Preço")
+    duration    = models.IntegerField(null=True, blank=True,
+                                        verbose_name="Duração")
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = 'Plano'
+        verbose_name_plural = 'Planos'
+
+class Rent(models.Model):
+    user       = models.ForeignKey(User, null=True, blank=True,
+                                      verbose_name="Utilizador",
+                                        on_delete=models.CASCADE)
+    bike       = models.ForeignKey(Bike, null=True, blank=True,
+                                        verbose_name="Bicicleta",
+                                        on_delete=models.CASCADE)
+    plan       = models.ForeignKey(Plan, null=True, blank=True,
+                                        verbose_name="Plano",
+                                        on_delete=models.CASCADE)
+    start_date = models.DateField(null=True, blank=True,
+                                        verbose_name="Data de início")
+    end_date   = models.DateField(null=True, blank=True,
+                                        verbose_name="Data de fim")
+    def __str__(self):
+        return self.user.first_name
+
+    class Meta:
+        verbose_name        = 'Aluguer'
+        verbose_name_plural = 'Alugueres'
