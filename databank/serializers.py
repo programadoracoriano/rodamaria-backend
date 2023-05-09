@@ -54,6 +54,7 @@ class PlanSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Rent
-        fields = '__all__'
+        fields = ('plan', 'bike', 'start_date', 'end_date', 'user')
