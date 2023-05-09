@@ -42,3 +42,21 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+
+class BikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
+        fields = '__all__'
+
+class PlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plan
+        fields = '__all__'
+
+class RentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    bike = BikeSerializer()
+    plan = PlanSerializer()
+    class Meta:
+        model = Rent
+        fields = '__all__'

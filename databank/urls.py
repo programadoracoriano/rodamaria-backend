@@ -9,4 +9,5 @@ urlpatterns = [
     path('profile/add-funds/<int:pk>/', AddFundsView.as_view(), name='add_funds'),
     path('profile/update/<int:pk>/', UpdateProfileView.as_view(), name='update_profile'),
     path('profile/user/', UserView.as_view(), name='user'),
+    path('rent/create/', RentCreateView.as_view(), name='rent-create'),
 ]

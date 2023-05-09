@@ -83,3 +83,8 @@ class AddFundsView(generics.UpdateAPIView):
             return Response(serializer.data)
         else:
             return Response({'error': 'Invalid card information or funds amount.'})
+
+class RentCreateView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = RentSerializer
+    queryset = Rent.objects.all()
