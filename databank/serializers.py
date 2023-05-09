@@ -55,8 +55,14 @@ class PlanSerializer(serializers.ModelSerializer):
 
 class RentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    plan = PlanSerializer(read_only=True)
-    bike = BikeSerializer(read_only=True)
     class Meta:
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'end_date', 'user')
+
+class RentGetSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    bike = BikeSerializer(read_only=True)
+    plan = PlanSerializer(read_only=True)
+    class Meta:
+        model = Rent
+        fields = '__all__'

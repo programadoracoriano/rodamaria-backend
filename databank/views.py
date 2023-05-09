@@ -84,6 +84,30 @@ class AddFundsView(generics.UpdateAPIView):
         else:
             return Response({'error': 'Invalid card information or funds amount.'})
 
+class BikeListView(generics.ListAPIView):
+    #permission_classes = [IsAuthenticated]
+    queryset = Bike.objects.all()
+    serializer_class = BikeSerializer
+
+class PlanListView(generics.ListAPIView):
+    #permission_classes = [IsAuthenticated]
+    queryset = Plan.objects.all()
+    serializer_class = PlanSerializer
+
+class RentListView(generics.ListAPIView):
+    #permission_classes = [IsAuthenticated]
+    queryset = Rent.objects.all()
+    serializer_class = RentSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Rent.objects.filter(user=user)
+
+class RentDetailView(generics.RetrieveAPIView):
+    queryset = Rent.objects.all()
+    serializer_class = RentGetSerializer
+    lookup_field = 'id'
+
 class RentCreateView(generics.CreateAPIView):
     #permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
