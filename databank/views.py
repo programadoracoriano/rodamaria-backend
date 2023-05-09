@@ -87,4 +87,12 @@ class AddFundsView(generics.UpdateAPIView):
 class RentCreateView(generics.CreateAPIView):
     #permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
-    queryset = Rent.objects.all()
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, headers=headers)
