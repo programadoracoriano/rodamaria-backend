@@ -94,7 +94,6 @@ class PlanListView(generics.ListAPIView):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
 
-
 class RentListView(generics.ListAPIView):
     #permission_classes = [IsAuthenticated]
     queryset = Rent.objects.all()
