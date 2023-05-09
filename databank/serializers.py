@@ -59,6 +59,7 @@ class RentSerializer(serializers.ModelSerializer):
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'end_date', 'user')
 
+
 class RentGetSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     bike = BikeSerializer(read_only=True)
