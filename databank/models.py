@@ -46,7 +46,8 @@ class Bike(models.Model):
     name       = models.CharField(max_length=120, null=True, blank=True,
                                   verbose_name="Nome")
     serie_number = models.CharField(max_length=120, null=True, blank=True,
-                                    verbose_name="Número de série")
+                                    verbose_name="Número de série",
+                                    unique=True)
     status    = models.CharField(max_length=120, null=True, blank=True,
                                  verbose_name="Estado")
     bought    = models.DateField(null=True, blank=True,

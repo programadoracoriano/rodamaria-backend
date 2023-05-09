@@ -89,6 +89,11 @@ class BikeListView(generics.ListAPIView):
     queryset = Bike.objects.all()
     serializer_class = BikeSerializer
 
+class BikeDetailView(generics.RetrieveAPIView):
+    queryset = Bike.objects.all()
+    serializer_class = BikeSerializer
+    lookup_field = 'serie_number'
+
 class PlanListView(generics.ListAPIView):
     #permission_classes = [IsAuthenticated]
     queryset = Plan.objects.all()
