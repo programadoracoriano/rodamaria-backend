@@ -54,9 +54,18 @@ class PlanSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    bike = BikeSerializer()
-    plan = PlanSerializer()
+    user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='user', write_only=True)
+    bike_id = serializers.PrimaryKeyRelatedField(queryset=Bike.objects.all(), source='bike', write_only=True)
+    plan_id = serializers.PrimaryKeyRelatedField(queryset=Plan.objects.all(), source='plan', write_only=True)
     class Meta:
         model = Rent
-        fields = '__all__'
+        fields = ('user_id', 'bike_id', 'plan_id', 'start_time', 'end_time')
+
+    def create(self, validated_data):
+            return Rent.objects.create(
+                user=validated_data['user_id'],
+                bike=validated_data['bike_id'],
+                plan=validated_data['plan_id'],
+                start_time=validated_data.get('start_time'),
+                end_time=validated_data.get('end_time')
+            )
