@@ -16,6 +16,12 @@ class PlanAdmin(admin.ModelAdmin):
     list_display    = ('id',)
     search_fields   = ('id','name', )
 
+class RentAdmin(admin.ModelAdmin):
+    model           = Rent
+    list_display    = ('id',)
+    search_fields   = ('id', )
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Bike, BikeAdmin)
 admin.site.register(Plan, PlanAdmin)
+admin.site.register(Rent, RentAdmin)
