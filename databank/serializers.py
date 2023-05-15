@@ -57,7 +57,7 @@ class RentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Rent
-        fields = ('plan', 'bike', 'start_date', 'end_date', 'user')
+        fields = ('plan', 'bike', 'start_date', 'user')
 
 
 class RentGetSerializer(serializers.ModelSerializer):

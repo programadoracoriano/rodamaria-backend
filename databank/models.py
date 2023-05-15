@@ -87,9 +87,8 @@ class Rent(models.Model):
                                         verbose_name="Plano",
                                         on_delete=models.CASCADE)
     start_date = models.DateField(null=True, blank=True,
-                                        verbose_name="Data de início")
-    end_date   = models.DateField(null=True, blank=True,
-                                        verbose_name="Data de fim")
+                                  auto_now_add=True,
+                                  verbose_name="Data de início")
     def __str__(self):
         return self.user.first_name
 
