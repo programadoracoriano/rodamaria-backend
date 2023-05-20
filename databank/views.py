@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
@@ -99,6 +100,10 @@ class PlanListView(generics.ListAPIView):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        return Rent.objects.filter(user=user)
+
 class RentListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Rent.objects.all()
@@ -118,7 +123,16 @@ class RentCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        get_plan  = Plan.objects.get(id=self.request.data.get('plan'))
+        get_bike  = Bike.objects.get(id=self.request.data.get('bike'))
+        date_rent = datetime.now() + timedelta(days=get_plan.duration)
+        get_rent  = Rent.objects.filter(bike=get_bike, get_plan=get_plan,
+                                        start_date__lte=date_rent)
+        condition = (get_rent.count() == 0)
+        if condition:
+            serializer.save(user=self.request.user)
+        else:
+            raise serializers.ValidationError({'error': 'Bike already rented.'})
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
