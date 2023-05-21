@@ -6,7 +6,7 @@ from .serializers import *
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.core.exceptions import DoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 class NewTokenRefreshView(TokenRefreshView):
     pass
 
@@ -123,7 +123,7 @@ class RentCreateView(generics.CreateAPIView):
         plan_id = self.request.data.get('plan')
         try:
             get_plan = Plan.objects.get(id=plan_id)
-        except DoesNotExist:
+        except ObjectDoesNotExist:
             raise serializers.ValidationError({'error': 'Invalid plan ID.'})
         get_bike  = Bike.objects.get(serie_number=self.request.data.get('bike'))
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
