@@ -70,7 +70,7 @@ class RentSerializer(serializers.ModelSerializer):
         except Plan.DoesNotExist:
             raise serializers.ValidationError({'error': 'Invalid plan ID.'})
 
-        get_bike = Bike.objects.get(serie_number=attrs.get('bike'))
+        get_bike = Bike.objects.filter(serie_number=attrs.get('bike')).first()
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
         get_rent = Rent.objects.filter(bike=get_bike, plan=get_plan, start_date__lte=date_rent)
         if get_rent.exists():
