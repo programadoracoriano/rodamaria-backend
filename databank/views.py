@@ -127,7 +127,7 @@ class RentCreateView(generics.CreateAPIView):
             raise serializers.ValidationError({'error': 'Bike already rented.'})
 
     def post(self, request, *args, **kwargs):
-        plan_id = int(request.data.get('plan'))
+        plan_id = int(request.data.get('plan_id'))
         try:
             get_plan = Plan.objects.get(id=plan_id)
         except ObjectDoesNotExist:
