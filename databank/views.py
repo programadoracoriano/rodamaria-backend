@@ -119,3 +119,8 @@ class RentDetailView(generics.RetrieveAPIView):
 class RentCreateView(generics.CreateAPIView):
     permission_classes  = [IsAuthenticated]
     serializer_class    = RentSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
