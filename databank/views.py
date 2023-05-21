@@ -120,11 +120,7 @@ class RentCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
     def perform_create(self, serializer):
-        condition = (get_rent.count() == 0)
-        if condition:
-            serializer.save(user=self.request.user)
-        else:
-            raise serializers.ValidationError({'error': 'Bike already rented.'})
+        serializer.save(user=self.request.user)
 
     def post(self, request, *args, **kwargs):
         plan_id = int(request.data.get('plan_id'))
