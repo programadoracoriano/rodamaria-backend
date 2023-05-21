@@ -96,7 +96,7 @@ class BikeDetailView(generics.RetrieveAPIView):
     lookup_field = 'serie_number'
 
 class PlanListView(generics.ListAPIView):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
 
@@ -120,7 +120,7 @@ class RentCreateView(generics.CreateAPIView):
     serializer_class = RentSerializer
     def perform_create(self, serializer):
         get_plan  = Plan.objects.get(id=self.request.data.get('plan'))
-        get_bike  = Bike.objects.get(id=self.request.data.get('bike'))
+        get_bike  = Bike.objects.get(serie_number=self.request.data.get('bike'))
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
         get_rent  = Rent.objects.filter(bike=get_bike, get_plan=get_plan,
                                         start_date__lte=date_rent)
