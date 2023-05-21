@@ -120,7 +120,7 @@ class RentCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
     def perform_create(self, serializer):
-        plan_id = self.request.data.get('plan')
+        plan_id = int(self.request.data.get('plan'))
         try:
             get_plan = Plan.objects.get(id=plan_id)
         except ObjectDoesNotExist:
