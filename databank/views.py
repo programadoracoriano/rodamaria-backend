@@ -117,27 +117,5 @@ class RentDetailView(generics.RetrieveAPIView):
     lookup_field = 'id'
 
 class RentCreateView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = RentSerializer
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def post(self, request, *args, **kwargs):
-        plan_id = int(request.data.get('plan_id'))
-        try:
-            get_plan = Plan.objects.get(id=plan_id)
-        except ObjectDoesNotExist:
-            raise serializers.ValidationError({'error': 'Invalid plan ID.'})
-        get_bike  = Bike.objects.get(serie_number=request.data.get('bike'))
-        date_rent = datetime.now() + timedelta(days=get_plan.duration)
-        get_rent  = Rent.objects.filter(bike=get_bike, get_plan=get_plan,
-                                        start_date__lte=date_rent)
-        condition = (get_rent.count() == 0)
-        if condition:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, headers=headers)
-        else:
-            raise serializers.ValidationError({'error': 'Bike already rented.'})
+    permission_classes  = [IsAuthenticated]
+    serializer_class    = RentSerializer
