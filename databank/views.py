@@ -118,9 +118,9 @@ class RentDetailView(generics.RetrieveAPIView):
 class RentCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RentSerializer
-    def perform_create(self, serializer):
-        get_plan  = Plan.objects.get(id=self.request.data.get('plan'))
-        get_bike  = Bike.objects.get(serie_number=self.request.data.get('bike'))
+    def perform_create(self, request, serializer):
+        get_plan  = Plan.objects.get(id=request.data.get('plan'))
+        get_bike  = Bike.objects.get(serie_number=request.data.get('bike'))
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
         get_rent  = Rent.objects.filter(bike=get_bike, get_plan=get_plan,
                                         start_date__lte=date_rent)
