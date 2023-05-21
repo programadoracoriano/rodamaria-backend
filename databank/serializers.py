@@ -78,7 +78,7 @@ class RentGetSerializer(serializers.ModelSerializer):
 
         get_bike = Bike.objects.get(serie_number=attrs.get('bike'))
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
-        get_rent = Rent.objects.filter(bike=get_bike, get_plan=get_plan, start_date__lte=date_rent)
+        get_rent = Rent.objects.filter(bike=get_bike, plan=get_plan, start_date__lte=date_rent)
         if get_rent.exists():
             raise serializers.ValidationError({'error': 'Bike already rented.'})
 
