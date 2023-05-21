@@ -96,13 +96,9 @@ class BikeDetailView(generics.RetrieveAPIView):
     lookup_field = 'serie_number'
 
 class PlanListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Rent.objects.filter(user=user)
 
 class RentListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
