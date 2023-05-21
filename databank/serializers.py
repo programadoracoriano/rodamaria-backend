@@ -59,16 +59,6 @@ class RentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'user')
-
-
-class RentGetSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    bike = BikeSerializer(read_only=True)
-    plan = PlanSerializer(read_only=True)
-    class Meta:
-        model = Rent
-        fields = '__all__'
-
     def validate(self, attrs):
         plan_id = attrs.get('plan_id')
         try:
@@ -93,3 +83,12 @@ class RentGetSerializer(serializers.ModelSerializer):
         if not plan or not user or not bike:
             raise serializers.ValidationError({'error': 'Incomplete data.'})
         return Rent.objects.create(**validated_data)
+
+
+class RentGetSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    bike = BikeSerializer(read_only=True)
+    plan = PlanSerializer(read_only=True)
+    class Meta:
+        model = Rent
+        fields = '__all__'
