@@ -60,7 +60,7 @@ class RentSerializer(serializers.ModelSerializer):
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'user')
     def validate(self, attrs):
-        plan_id = attrs.get('plan_id')
+        plan_id = int(attrs.get('plan_id'))
         try:
             get_plan = Plan.objects.get(id=plan_id)
         except Plan.DoesNotExist:
