@@ -117,8 +117,9 @@ class RentDetailView(generics.RetrieveAPIView):
     lookup_field = 'id'
 
 class RentCreateView(generics.CreateAPIView):
-    permission_classes  = [IsAuthenticated]
-    serializer_class    = RentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes     = [IsAuthenticated]
+    serializer_class       = RentSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
