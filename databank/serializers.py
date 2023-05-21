@@ -86,4 +86,10 @@ class RentGetSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+        plan = validated_data.get('plan')
+        user = validated_data.get('user')
+        bike = validated_data.get('bike')
+
+        if not plan or not user or not bike:
+            raise serializers.ValidationError({'error': 'Incomplete data.'})
         return Rent.objects.create(**validated_data)
