@@ -44,7 +44,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Bike(models.Model):
     name       = models.CharField(max_length=120, null=True, blank=True,
-                                  verbose_name="Nome")
+                                  verbose_name="Nome",
+                                  unique=True)
     serie_number = models.CharField(max_length=120, null=True, blank=True,
                                     verbose_name="Número de série",
                                     unique=True)
@@ -62,7 +63,8 @@ class Bike(models.Model):
 
 class Plan(models.Model):
     name        = models.CharField(max_length=120, null=True, blank=True,
-                                   verbose_name="Nome")
+                                   verbose_name="Nome",
+                                   unique=True)
     description = models.CharField(max_length=120, null=True, blank=True,
                                    verbose_name="Descrição")
     price       = models.FloatField(null=True, blank=True,
@@ -108,7 +110,8 @@ class PlaceCategory(models.Model):
 
 class Place(models.Model):
     name       = models.CharField(max_length=120, null=True, blank=True,
-                                  verbose_name="Nome")
+                                  verbose_name="Nome",
+                                  unique=True)
     category   = models.ForeignKey(PlaceCategory, null=True, blank=True,
                                    verbose_name="Categoria",
                                    on_delete=models.CASCADE)
