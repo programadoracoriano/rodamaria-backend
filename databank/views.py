@@ -123,9 +123,9 @@ class RentDetailView(generics.RetrieveAPIView):
 def RentCreateView(request):
     user = request.user
     bike = Bike.objects.get(serie_number=request.data['serie_number'])
-    plan = Plan.objects.get(id=request.data['fuck_you'])
+    plan = Plan.objects.get(id=request.data['one_plan'])
     start_date = datetime.now()
-    end_date = start_date + timedelta(days=plan.days)
+    end_date = start_date + timedelta(days=plan.duration)
     get_rent = Rent.objects.filter(user=user, bike=bike, start_date__lte=end_date)
     if get_rent.exists():
         return Response({'message': 'Esta bicicleta já está alugada!'})
