@@ -123,7 +123,7 @@ class RentDetailView(generics.RetrieveAPIView):
 def RentCreateView(request):
     user = request.user
     bike = Bike.objects.get(serie_number=request.data['serie_number'])
-    plan = Plan.objects.get(id=request.data['plan'])
+    plan = Plan.objects.get(id=request.data['fuck_you'])
     start_date = datetime.now()
     end_date = start_date + timedelta(days=plan.days)
     get_rent = Rent.objects.filter(user=user, bike=bike, start_date__lte=end_date)
