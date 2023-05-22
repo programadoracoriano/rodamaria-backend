@@ -61,7 +61,7 @@ class RentSerializer(serializers.ModelSerializer):
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'user')
     def validate(self, attrs):
-        plan_id = attrs.get('one_plan')
+        plan_id = attrs.get('plan')
         if plan_id is None:
           raise serializers.ValidationError({'error': 'Missing plan_id field.'})
         if not isinstance(plan_id, int):
