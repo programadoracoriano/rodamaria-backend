@@ -71,9 +71,10 @@ class RentSerializer(serializers.ModelSerializer):
 
         get_bike = Bike.objects.get(name=str(attrs.get('bike')))
         date_rent = datetime.now() + timedelta(days=get_plan.duration)
-        get_rent = Rent.objects.filter(bike=get_bike, plan=get_plan, start_date__lte=date_rent)
+        get_rent = Rent.objects.filter(bike=get_bike, plan=get_plan,
+                                       start_date__lte=date_rent)
         if get_rent.exists():
-            raise serializers.ValidationError({'error': 'Bike already rented.'})
+            raise serializers.ValidationError({'error': 'Bicicleta já está alugada.'})
 
         attrs['user'] = self.context['request'].user
         return attrs
@@ -84,7 +85,7 @@ class RentSerializer(serializers.ModelSerializer):
         bike = validated_data.get('bike')
 
         if not plan or not user or not bike:
-            raise serializers.ValidationError({'error': 'Incomplete data.'})
+            raise serializers.ValidationError({'error': 'Tens de escolher um plano.'})
         return Rent.objects.create(**validated_data)
 
 
