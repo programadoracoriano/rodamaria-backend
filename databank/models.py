@@ -95,3 +95,36 @@ class Rent(models.Model):
     class Meta:
         verbose_name        = 'Aluguer'
         verbose_name_plural = 'Alugueres'
+
+class PlaceCategory(models.Model):
+    name = models.CharField(max_length=120, null=True, blank=True,
+                            verbose_name="Nome")
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = 'Categoria de local'
+        verbose_name_plural = 'Categorias de local'
+
+class Place(models.Model):
+    name       = models.CharField(max_length=120, null=True, blank=True,
+                                  verbose_name="Nome")
+    category   = models.ForeignKey(PlaceCategory, null=True, blank=True,
+                                   verbose_name="Categoria",
+                                   on_delete=models.CASCADE)
+    description = models.CharField(max_length=120, null=True, blank=True,
+                                      verbose_name="Descrição")
+    lat = models.CharField(max_length=120, null=True, blank=True,
+                                      verbose_name="Latitude")
+    lng = models.CharField(max_length=120, null=True, blank=True,
+                                        verbose_name="Longitude")
+    image = ResizedImageField(size=[500, 300], null=True, blank=True,
+                              quality=100, upload_to='images/places/',
+                              force_format='WEBP', keep_meta=False,
+                              verbose_name="Imagem")
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = 'Local'
+        verbose_name_plural = 'Locais'

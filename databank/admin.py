@@ -21,7 +21,19 @@ class RentAdmin(admin.ModelAdmin):
     list_display    = ('id',)
     search_fields   = ('id', )
 
+class PlaceCategoryAdmin(admin.ModelAdmin):
+    model           = PlaceCategory
+    list_display    = ('name',)
+    search_fields   = ('name', 'id')
+
+class PlaceAdmin(admin.ModelAdmin):
+    model           = Place
+    list_display    = ('name',)
+    search_fields   = ('name', 'id')
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Bike, BikeAdmin)
 admin.site.register(Plan, PlanAdmin)
 admin.site.register(Rent, RentAdmin)
+admin.site.register(PlaceCategory, PlaceCategoryAdmin)
+admin.site.register(Place, PlaceAdmin)

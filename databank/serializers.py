@@ -96,3 +96,14 @@ class RentGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
         fields = '__all__'
+
+class PlaceCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlaceCategory
+        fields = '__all__'
+
+class PlaceSerializer(serializers.ModelSerializer):
+    category = PlaceCategorySerializer(read_only=True)
+    class Meta:
+        model = Place
+        fields = '__all__'

@@ -126,3 +126,8 @@ class RentCreateView(generics.CreateAPIView):
         context = super().get_serializer_context()
         context['request'] = self.request
         return context
+
+class PlaceListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Place.objects.all()
+    serializer_class = PlaceSerializer

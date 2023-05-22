@@ -16,4 +16,5 @@ urlpatterns = [
     path('rent/list/', RentListView.as_view(), name='rent-detail'),
     path('rent/<int:pk>/', RentDetailView.as_view(), name='rent-detail'),
     path('rent/create/', RentCreateView.as_view(), name='rent-create'),
+    path('places/list/', PlaceListView.as_view(), name='rent-update'),
 ]
