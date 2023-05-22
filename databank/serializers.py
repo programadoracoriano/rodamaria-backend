@@ -65,7 +65,7 @@ class RentSerializer(serializers.ModelSerializer):
         if plan_id is None:
           raise serializers.ValidationError({'error': 'Missing plan_id field.'})
         try:
-            get_plan = Plan.objects.get(id=plan_id)
+            get_plan = Plan.objects.get(name=plan_id)
         except Plan.DoesNotExist:
             raise serializers.ValidationError({'error': 'Invalid plan ID.'})
 
