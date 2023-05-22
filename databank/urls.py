@@ -15,5 +15,5 @@ urlpatterns = [
     path('plan/list/', PlanListView.as_view(), name='plan-detail'),
     path('rent/list/', RentListView.as_view(), name='rent-detail'),
     path('rent/<int:pk>/', RentDetailView.as_view(), name='rent-detail'),
-    path('rent/create/', RentCreateView.as_view(), name='rent-create'),
+    path('rent/create/', RentCreateView, name='rent-create'),
 ]

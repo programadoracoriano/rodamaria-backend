@@ -7,6 +7,8 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+
 class NewTokenRefreshView(TokenRefreshView):
     pass
 
@@ -116,12 +118,19 @@ class RentDetailView(generics.RetrieveAPIView):
     serializer_class = RentGetSerializer
     lookup_field = 'id'
 
-class RentCreateView(generics.CreateAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes     = [IsAuthenticated]
-    serializer_class       = RentSerializer
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['request'] = self.request
-        return context
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def RentCreateView(request):
+    user = request.user
+    bike = Bike.objects.get(serie_number=request.data['serie_number'])
+    plan = Plan.objects.get(name=request.data['plan'])
+    start_date = datetime.now()
+    end_date = start_date + timedelta(days=plan.days)
+    get_rent = Rent.objects.filter(user=user, bike=bike, start_date__lte=end_date)
+    if get_rent.exists():
+        return Response({'message': 'Esta bicicleta já está alugada!'})
+    else:
+        rent = Rent.objects.create(user=user, bike=bike, plan=plan,
+                               start_date=start_date, end_date=end_date)
+        rent.save()
+        return Response({'message': 'Bicileta alugada com sucesso!'})
