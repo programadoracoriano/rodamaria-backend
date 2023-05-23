@@ -125,6 +125,10 @@ class Place(models.Model):
                               quality=100, upload_to='images/places/',
                               force_format='WEBP', keep_meta=False,
                               verbose_name="Imagem")
+    @property
+    def image_url(self):
+        return "{0}{1}".format(settings.SITE_URL, self.image.url)
+
     def __str__(self):
         return self.name
 
