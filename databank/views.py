@@ -105,7 +105,7 @@ class PlanListView(generics.ListAPIView):
 class RentListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Rent.objects.all()
-    serializer_class = RentSerializer
+    serializer_class = RentGetSerializer
 
     def get_queryset(self):
         user = self.request.user
