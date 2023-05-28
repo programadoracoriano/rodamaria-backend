@@ -87,7 +87,7 @@ class RentSerializer(serializers.ModelSerializer):
 
         if not plan or not user or not bike:
             raise serializers.ValidationError({'error': 'Tens de escolher um plano.'})
-        if user.funds < plan.price:
+        if user.profile.funds < plan.price:
             raise serializers.ValidationError({'error': 'Saldo insuficiente.'})
 
         # Subtract funds from user
