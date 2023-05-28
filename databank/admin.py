@@ -8,12 +8,17 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class BikeAdmin(admin.ModelAdmin):
     model           = Bike
-    list_display    = ('id',)
+    list_display    = ('serie_number', 'id',)
+    search_fields   = ('id','name', )
+
+class PlanCategoryAdmin(admin.ModelAdmin):
+    model           = PlanCategory
+    list_display    = ('name', 'id',)
     search_fields   = ('id','name', )
 
 class PlanAdmin(admin.ModelAdmin):
     model           = Plan
-    list_display    = ('id',)
+    list_display    = ('name', 'id',)
     search_fields   = ('id','name', )
 
 class RentAdmin(admin.ModelAdmin):
@@ -33,6 +38,7 @@ class PlaceAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Bike, BikeAdmin)
+admin.site.register(PlanCategory, PlanCategoryAdmin)
 admin.site.register(Plan, PlanAdmin)
 admin.site.register(Rent, RentAdmin)
 admin.site.register(PlaceCategory, PlaceCategoryAdmin)
