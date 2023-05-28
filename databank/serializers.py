@@ -91,8 +91,8 @@ class RentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'error': 'Saldo insuficiente.'})
 
         # Subtract funds from user
-        user.funds -= plan.price
-        user.save()
+        user.profile.funds -= plan.price
+        user.profile.save()
 
         return Rent.objects.create(**validated_data)
 
