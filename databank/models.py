@@ -61,10 +61,24 @@ class Bike(models.Model):
         verbose_name        = 'Bicicleta'
         verbose_name_plural = 'Bicicletas'
 
+class PlanCategory(models.Model):
+    name = models.CharField(max_length=120, null=True, blank=True,
+                            verbose_name="Nome")
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = 'Categoria de plano'
+        verbose_name_plural = 'Categorias de Planos'
+
+
 class Plan(models.Model):
     name        = models.CharField(max_length=120, null=True, blank=True,
                                    verbose_name="Nome",
                                    unique=True)
+    category   = models.ForeignKey(PlanCategory, null=True, blank=True,
+                                   verbose_name="Categoria",
+                                   on_delete=models.CASCADE)
     description = models.CharField(max_length=120, null=True, blank=True,
                                    verbose_name="Descrição")
     price       = models.FloatField(null=True, blank=True,
@@ -115,7 +129,7 @@ class Place(models.Model):
     category   = models.ForeignKey(PlaceCategory, null=True, blank=True,
                                    verbose_name="Categoria",
                                    on_delete=models.CASCADE)
-    description = models.CharField(max_length=120, null=True, blank=True,
+    description = models.TextField(max_length=120, null=True, blank=True,
                                       verbose_name="Descrição")
     lat = models.CharField(max_length=120, null=True, blank=True,
                                       verbose_name="Latitude")
@@ -125,7 +139,8 @@ class Place(models.Model):
                               quality=100, upload_to='images/places/',
                               force_format='WEBP', keep_meta=False,
                               verbose_name="Imagem")
-
+    api_image = models.CharField(max_length=1000, null=True, blank=True, 
+                                  verbose_name="Imagem_api")
     def __str__(self):
         return self.name
 
