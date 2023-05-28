@@ -60,6 +60,7 @@ class RentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
         fields = ('plan', 'bike', 'start_date', 'user')
+
     def validate(self, attrs):
         plan_id = attrs.get('plan')
         if plan_id is None:
@@ -86,6 +87,13 @@ class RentSerializer(serializers.ModelSerializer):
 
         if not plan or not user or not bike:
             raise serializers.ValidationError({'error': 'Tens de escolher um plano.'})
+        if user.funds < plan.price:
+            raise serializers.ValidationError({'error': 'Saldo insuficiente.'})
+
+        # Subtract funds from user
+        user.funds -= plan.price
+        user.save()
+
         return Rent.objects.create(**validated_data)
 
 
