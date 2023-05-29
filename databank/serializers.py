@@ -50,7 +50,13 @@ class BikeSerializer(serializers.ModelSerializer):
         model = Bike
         fields = '__all__'
 
+class PlanCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanCategory
+        fields = '__all__'
+
 class PlanSerializer(serializers.ModelSerializer):
+    category = PlanCategorySerializer(read_only=True)
     class Meta:
         model = Plan
         fields = '__all__'
